@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  backend:
+    image: api-server
+    build: ./server
+    env_file: ./server/.env
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_URI=$MONGO_URI
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+volumes:
+  mongo-data:
