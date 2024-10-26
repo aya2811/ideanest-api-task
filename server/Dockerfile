@@ -1,9 +1,10 @@
-FROM node:16
+FROM node:18-alpine
 
 # Create and set the working directory
-WORKDIR /server
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 # Copy package.json and package-lock.json to the working directory
-COPY package.json .
+COPY  package*.json ./
 # Install dependencies
 RUN npm install
 # Copy the rest of the application code

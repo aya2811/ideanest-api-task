@@ -1,21 +1,40 @@
-version: '3.8'
+version: '3.7'
 
 services:
-  backend:
-    image: api-server
-    build: ./server
-    env_file: ./server/.env
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: myapp-server
+    container_name: myapp-node-server
+    command: node server.js
+    volumes:
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - "8080:8080"
-    environment:
-      - MONGO_URI=$MONGO_URI
     depends_on:
       - mongo
+    env_file: ./server/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - app-network
   mongo:
     image: mongo
+    volumes:
+      - data-volume:/data/db
     ports:
       - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
+    networks:
+      - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
 volumes:
-  mongo-data:
+    data-volume:
+    node_modules:
+    web-root:
+      driver: local

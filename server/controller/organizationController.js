@@ -18,7 +18,7 @@ exports.getAllOrganizations = async (req, res) => {
     try {
         await Organization
         .find()
-        .populate('organization_members')
+        .populate('organization_members','name email access_level -_id')
         .then(organizations => {
             res.json(organizations)
         });
