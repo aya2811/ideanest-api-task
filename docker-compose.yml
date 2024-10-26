@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     image: myapp-server
     container_name: myapp-node-server
-    command: node server.js
+    command: node index.js
     volumes:
       - ./server/:/usr/src/app
       - /usr/src/app/node_modules
